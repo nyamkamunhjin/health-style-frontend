@@ -32,6 +32,20 @@ export interface Drug {
   };
 }
 
+export interface Category {
+  id: number;
+  modified_date: Date;
+  created_date: Date;
+  code: string;
+  name: string;
+  description: string;
+  is_active: boolean;
+  med_items?: any;
+  created_user_id: number;
+  modified_user_id: number;
+  created_user?: any;
+  modified_user?: any;
+}
 export interface ReturnBase {
   body: any;
   error_msg: string;
@@ -44,8 +58,6 @@ const searchDrugs: (name: string) => Promise<Drug[]> = async (name) => {
     method: 'GET',
   })) as ReturnBase;
 
-  // console.log(drugs);
-
   return drugs.body as Drug[];
 };
 
@@ -55,13 +67,30 @@ const getDrugDetail: (id: string) => Promise<Drug> = async (id) => {
     method: 'GET',
   })) as ReturnBase;
 
-  // console.log(drugs);
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return drugs.body as Drug;
+};
+
+const getDrugCategories: () => Promise<Category[]> = async () => {
+  const drugs = (await BaseRequest({
+    url: `licemed/classes`,
+    method: 'GET',
+  })) as ReturnBase;
+
+  return drugs.body as Category[];
+};
+
+const searchDrugCategries: (code: string) => Promise<Drug[]> = async (code) => {
+  const drugs = (await BaseRequest({
+    url: `licemed/search/class/${code}`,
+    method: 'GET',
+  })) as ReturnBase;
+
+  return drugs.body as Drug[];
 };
 
 export default {
   searchDrugs,
   getDrugDetail,
+  getDrugCategories,
+  searchDrugCategries,
 };
