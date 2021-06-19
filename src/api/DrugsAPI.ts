@@ -79,7 +79,9 @@ const getDrugCategories: () => Promise<Category[]> = async () => {
   return drugs.body as Category[];
 };
 
-const searchDrugCategries: (code: string) => Promise<Drug[]> = async (code) => {
+const searchDrugCategories: (code: string) => Promise<Drug[]> = async (
+  code,
+) => {
   const drugs = (await BaseRequest({
     url: `licemed/search/class/${code}`,
     method: 'GET',
@@ -92,5 +94,5 @@ export default {
   searchDrugs,
   getDrugDetail,
   getDrugCategories,
-  searchDrugCategries,
+  searchDrugCategories,
 };

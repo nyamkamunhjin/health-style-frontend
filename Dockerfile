@@ -18,7 +18,7 @@ FROM node:alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
-
+ENV NEXT_PUBLIC_BACKEND_URL https://api-healthstyle.duckdns.org/api/v1/
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 

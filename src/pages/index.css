@@ -11,7 +11,7 @@
 }
 
 .btn {
-  @apply bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50 px-1 py-3 rounded-xl shadow-xl text-white;
+  @apply bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50 px-2 py-3 rounded-xl shadow-xl text-white;
 }
 
 ::-webkit-scrollbar {

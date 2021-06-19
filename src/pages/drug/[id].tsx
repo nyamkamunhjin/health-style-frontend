@@ -15,7 +15,7 @@ import 'react-medium-image-zoom/dist/styles.css';
 const URL_IMAGE_PREFIX = 'http://103.50.204.55:9001/licemed-images/';
 const backgroundImage =
   'https://images.unsplash.com/photo-1584362917165-526a968579e8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1982&q=80';
-const Card: NextPage = () => {
+const Drug: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const drug = useRequest(DrugsAPI.getDrugDetail);
@@ -60,13 +60,15 @@ const Card: NextPage = () => {
           >
             Буцах
           </button>
-          <div className="flex gap-2">
+          <div className="flex-col md:flex-wrap gap-2">
             {drug.data?.licemed_item_dtl?.images[0]?.path && (
-              <img
-                className="w-72 rounded-xl object-contain border border-solid border-black"
-                src={`${URL_IMAGE_PREFIX}${drug.data?.licemed_item_dtl?.images[0].path}`}
-                alt="Эмний зураг"
-              />
+              <Zoom>
+                <img
+                  className="w-72 rounded-xl object-contain border border-solid border-black"
+                  src={`${URL_IMAGE_PREFIX}${drug.data?.licemed_item_dtl?.images[0].path}`}
+                  alt="Эмний зураг"
+                />
+              </Zoom>
             )}
             <div>
               <p className="text-4xl font-semibold">{drug.data?.name}</p>
@@ -109,20 +111,18 @@ const Card: NextPage = () => {
               </div>
             </div>
           </div>
-          <p className="text-4xl font-semibold">Зурагнууд</p>
+          {/* <p className="text-4xl font-semibold">Зурагнууд</p>
           <div className="w-full flex flex-wrap gap-2 items-start">
-            {drug.data?.licemed_item_dtl?.images.map(
-              (each: { path: string }) => (
+
                 <Zoom>
                   <img
                     className="w-72 rounded-xl object-contain border border-solid border-black"
-                    src={`${URL_IMAGE_PREFIX}/${each.path}`}
+                    src={`${URL_IMAGE_PREFIX}/${drug.data?.licemed_item_dtl?.images[0].path}`}
                     alt="Эмний зураг"
                   />
                 </Zoom>
-              ),
-            )}
-          </div>
+
+          </div> */}
           {drug.data?.licemed_item_dtl?.content !== '<span></span>' && (
             <div className="flex flex-col gap-4">
               <p className="text-4xl font-semibold">Хэрэглэх заавар</p>
@@ -138,4 +138,4 @@ const Card: NextPage = () => {
     </>
   );
 };
-export default Card;
+export default Drug;

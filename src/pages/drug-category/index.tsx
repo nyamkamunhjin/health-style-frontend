@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useRequest } from 'ahooks';
-import { List } from 'antd';
+import { List, Select } from 'antd';
+import DrugCategories from 'api/DrugCategories';
 import DrugsAPI, { Drug } from 'api/DrugsAPI';
 import { NextPage } from 'next';
 import { useRouter } from 'next/dist/client/router';
@@ -11,19 +12,32 @@ import React, { useEffect, useState } from 'react';
 const imageUrl =
   'https://images.unsplash.com/photo-1584362917165-526a968579e8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1982&q=80';
 
-const Home: NextPage = () => {
+const DrugCategory: NextPage = () => {
+  const [selectInput, setSelectedInput] = useState<string>();
   const [input, setInput] = useState('');
   const router = useRouter();
-  const drugs = useRequest(DrugsAPI.searchDrugs, {
+  const [filteredData, setFilteredData] = useState<Drug[]>([]);
+
+  const drugs = useRequest(DrugsAPI.searchDrugCategories, {
     debounceInterval: 500,
     manual: true,
+    onSuccess: (res) => {
+      setFilteredData(res);
+    },
   });
 
   useEffect(() => {
-    if (input.trim() === '') {
+    if (!selectInput || selectInput?.trim() === '') {
       drugs.mutate(undefined);
     } else {
-      void drugs.run(input);
+      void drugs.run(selectInput);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectInput]);
+
+  useEffect(() => {
+    if (drugs.data) {
+      setFilteredData(drugs.data.filter((each) => each.name.includes(input)));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input]);
@@ -31,7 +45,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>HealthStyle</title>
+        <title>Ангилалаар хайх</title>
       </Head>
       <div
         className="w-screen h-screen flex flex-col lg:flex-row gap-2 bg-cover"
@@ -40,37 +54,51 @@ const Home: NextPage = () => {
         <div className="w-full h-full lg:w-1/2 flex flex-col items-center p-4 gap-4 pt-10 glass">
           <div className="glass flex flex-col gap-4 w-full max-w-md p-4">
             <div className="flex flex-col gap-4 items-center">
-              <button
-                className="btn ml-auto"
-                type="button"
-                onClick={() => router.push('/drug-category')}
+              <span className="text-xl">Ангилал сонгох</span>
+              <Select
+                className="w-full"
+                value={selectInput}
+                onChange={(e) => setSelectedInput(e)}
+                allowClear
               >
-                Ангилалаар хайх
-              </button>
-              <span className="text-xl">Хайх утга</span>
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                className="input w-full"
-                type="text"
-                placeholder="Ибупрофен гэх мэт... "
-              />
+                {DrugCategories.map((each) => (
+                  <Select.Option key={each.id} value={each.code}>
+                    <p className="flex gap-2 items-center">
+                      {each.icon}
+                      <span className="truncate">{each.name}</span>
+                    </p>
+                  </Select.Option>
+                ))}
+              </Select>
+
+              {selectInput && selectInput.trim() !== '' && (
+                <div className="flex flex-col gap-2 items-center w-full">
+                  <span className="text-xl">Хайх</span>
+                  <input
+                    className="input w-full"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    type="text"
+                    placeholder="Ибупрофен гэх мэт... "
+                  />
+                </div>
+              )}
             </div>
           </div>
 
           <span className="text-xl">Эмийн жагсаалт</span>
-          {Array.isArray(drugs.data) && drugs.data.length > 0 && (
-            <p className="w-full text-right">{drugs.data.length} эм олдлоо</p>
+          {Array.isArray(filteredData) && filteredData.length > 0 && (
+            <p className="w-full text-right">{filteredData.length} эм олдлоо</p>
           )}
           <List
             className="w-full overflow-y-scroll"
             size="large"
-            dataSource={drugs.data as Drug[]}
+            dataSource={filteredData}
             loading={drugs.loading}
             renderItem={(item) => (
               <List.Item
                 className="p-4 bg-white rounded-xl mx-2 mb-2 border-none hover:bg-gray-50 cursor-pointer"
-                // onClick={() => router.push(`/drug/${item.id}`)}
+                onClick={() => router.push(`/drug/${item.id}`)}
               >
                 <Link href={`/drug/${item.id}`}>
                   <div className="flex flex-col">
@@ -106,4 +134,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default DrugCategory;
