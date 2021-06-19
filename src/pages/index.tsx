@@ -32,7 +32,7 @@ const Home: NextPage = () => {
         <title>HealthStyle</title>
       </Head>
       <div
-        className="w-screen h-screen flex flex-col lg:flex-row gap-2 bg-fixed"
+        className="w-screen h-screen flex flex-col lg:flex-row gap-2 bg-cover"
         style={{ background: `url('/background.png')` }}
       >
         <div className="w-full h-full lg:w-1/2 flex flex-col items-center p-4 gap-4 pt-10 glass">

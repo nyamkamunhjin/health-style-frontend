@@ -1,5 +1,5 @@
 module.exports = {
-  trailingSlash: true,
+  trailingSlash: false,
   future: {
     poweredByHeader: false,
     reactStrictMode: true,
