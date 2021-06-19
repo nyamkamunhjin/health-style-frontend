@@ -26,17 +26,21 @@ const DrugRender: NextPage<Props> = ({ drug }) => {
         <Head>
           <title>{drug.name}</title>
           <meta name="title" content={drug.name} />
-          <meta
-            name="image"
-            content={drug?.licemed_item_dtl?.images[0]?.path || ''}
-          />
+          {drug?.licemed_item_dtl?.images[0] && (
+            <meta
+              name="image"
+              content={`${URL_IMAGE_PREFIX}${drug?.licemed_item_dtl?.images[0].path}`}
+            />
+          )}
           <meta name="description" content={drug?.inter_name} />
           <meta name="author" content={drug.supplier} />
           <meta name="og:title" content={drug.name} />
-          <meta
-            name="og:image"
-            content={drug?.licemed_item_dtl?.images[0]?.path || ''}
-          />
+          {drug?.licemed_item_dtl?.images[0] && (
+            <meta
+              name="og:image"
+              content={`${URL_IMAGE_PREFIX}${drug?.licemed_item_dtl?.images[0].path}`}
+            />
+          )}
           <meta name="og:description" content={drug?.inter_name} />
           <meta name="og:author" content={drug.supplier} />
         </Head>
