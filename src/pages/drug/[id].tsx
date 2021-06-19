@@ -12,9 +12,8 @@ import React, { useEffect } from 'react';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 
-const URL_IMAGE_PREFIX = 'http://103.50.204.55:9001/licemed-images/';
-const backgroundImage =
-  'https://images.unsplash.com/photo-1584362917165-526a968579e8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1982&q=80';
+const URL_IMAGE_PREFIX = 'https://file.htstyle.ml/licemed-images/';
+
 const Drug: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -47,9 +46,9 @@ const Drug: NextPage = () => {
         </Head>
       )}
       <div
-        className="w-screen h-screen bg-cover bg-scroll"
+        className="bg-fixed bg-cover"
         style={{
-          background: `url(${backgroundImage})`,
+          background: `url('/background.png')`,
         }}
       >
         <div className="glass mx-auto max-w-4xl w-full pt-10 flex flex-col gap-4 p-4">
