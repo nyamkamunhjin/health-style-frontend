@@ -31,6 +31,6 @@ jobs:
         run: |
           docker build -t health-style .
           docker ps --quiet --filter="name="health-style" | xargs --no-run-if-empty docker rm -f
-          docker run -d -p 8080:3000 --restart always --name health-style health-style
+          docker run -d -p 8080:80 --restart always --name health-style health-style
           docker image prune -f
         # working-directory: _work/health-style-frontend/health-style-frontend

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable import/no-self-import */
 /* eslint-disable react/no-unescaped-entities */
 import { useRequest } from 'ahooks';
 import { List } from 'antd';
@@ -7,9 +9,6 @@ import { useRouter } from 'next/dist/client/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-
-const imageUrl =
-  'https://images.unsplash.com/photo-1584362917165-526a968579e8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1982&q=80';
 
 const Home: NextPage = () => {
   const [input, setInput] = useState('');
@@ -35,7 +34,7 @@ const Home: NextPage = () => {
       </Head>
       <div
         className="w-screen h-screen flex flex-col lg:flex-row gap-2 bg-cover"
-        style={{ background: `url(${imageUrl})` }}
+        style={{ background: `url('background.png')` }}
       >
         <div className="w-full h-full lg:w-1/2 flex flex-col items-center p-4 gap-4 pt-10 glass">
           <div className="glass flex flex-col gap-4 w-full max-w-md p-4">
