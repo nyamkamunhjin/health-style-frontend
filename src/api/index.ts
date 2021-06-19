@@ -34,7 +34,7 @@ interface BaseRequestProps {
 
 export const BaseRequest = async (props: BaseRequestProps) => {
   // const isMe = props.url === 'person/me';
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
   // const locale = localStorage.getItem('locale') || 'mn'
   const locale = 'en';
 
@@ -46,10 +46,10 @@ export const BaseRequest = async (props: BaseRequestProps) => {
     ? props.contentType
     : 'application/json';
   axios.defaults.headers.common['Access-Control-Allow-Headers'] = '*';
-  if (token) {
-    // console.log('token', token)
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  }
+  // if (token) {
+  //   // console.log('token', token)
+  //   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  // }
   const config: AxiosRequestConfig = {
     baseURL:
       process.env.NEXT_PUBLIC_BACKEND_URL ||
